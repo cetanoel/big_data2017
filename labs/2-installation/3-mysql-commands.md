@@ -102,14 +102,20 @@ mysql> show databases;
 | Database           |
 +--------------------+
 | information_schema |
-| activity_monitor   |
-| cloudera_nav       |
+| amon               |
 | hive               |
-| host_monitor       |
+| hmon               |
+| hue                |
 | mysql              |
+| nav                |
+| navms              |
+| oozie              |
 | performance_schema |
-| report_manager     |
-| service_monitor    |
+| rman               |
+| scm                |
+| sentry             |
+| smon               |
 +--------------------+
-9 rows in set (0.00 sec)
+14 rows in set (0.00 sec)
+
 ```

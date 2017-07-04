@@ -2,7 +2,6 @@
 
 ## Parameters
 
-
 ---
 
 ## Check Swappiness
@@ -46,6 +45,19 @@ tmpfs                tmpfs        3.9G  300K  3.9G   1% /dev/shm
                      ext4          41G   50M   39G   1% /home
 none                 binfmt_misc     0     0     0    - /proc/sys/fs/binfmt_misc
 ```
+```
+Filesystem     Type         Size  Used Avail Use% Mounted on
+/dev/sda1      ext4          30G   12G   17G  41% /
+proc           proc            0     0     0    - /proc
+sysfs          sysfs           0     0     0    - /sys
+devpts         devpts          0     0     0    - /dev/pts
+tmpfs          tmpfs        6.9G     0  6.9G   0% /dev/shm
+none           binfmt_misc     0     0     0    - /proc/sys/fs/binfmt_misc
+/dev/sdb1      ext4          28G   48M   26G   1% /mnt/resource
+cm_processes   tmpfs        6.9G   24M  6.9G   1% /var/run/cloudera-scm-agent/process
+
+```
+Unfortunately I ran the first command couple days ago when I was working on my virtual machine. However, I finished the task using azure and printed the mount details only after installing cloudera. (second output)
 
 ## Show the reserve space of any non-root, ext-based volumes (Not Completed)
 
@@ -80,23 +92,23 @@ HugePages_Total:       0
 ifconfig -a
 ```
 ```
-eth0      Link encap:Ethernet  HWaddr 08:00:27:63:31:A9  
-          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
-          inet6 addr: fe80::a00:27ff:fe63:31a9/64 Scope:Link
+eth0      Link encap:Ethernet  HWaddr 00:0D:3A:1A:65:2D
+          inet addr:10.0.0.4  Bcast:10.0.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::20d:3aff:fe1a:652d/64 Scope:Link
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:13 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:17 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:3223 (3.1 KiB)  TX bytes:1828 (1.7 KiB)
+          RX packets:4651437 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1371839 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:5582340039 (5.1 GiB)  TX bytes:2261923599 (2.1 GiB)
 
-lo        Link encap:Local Loopback  
+lo        Link encap:Local Loopback
           inet addr:127.0.0.1  Mask:255.0.0.0
           inet6 addr: ::1/128 Scope:Host
           UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
-          RX bytes:480 (480.0 b)  TX bytes:480 (480.0 b)
+          RX packets:3109996 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3109996 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:4803889426 (4.4 GiB)  TX bytes:4803889426 (4.4 GiB)
 ```
 ## Setting Forward and Reverse Host Lookup
 
@@ -107,21 +119,21 @@ sudo vim /etc/hosts
 ```
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.0.2.15       hadoop1
-10.0.2.16       hadoop2
+10.0.0.4        node1
+10.0.0.5        node2
 ```
 
 We use `getent` to list forward and reverse host lookups:
 IP address lookup refers to the process of translating between IP addresses and internet domain names. Forward IP address lookup converts an internet name to an IP address. Reverse IP address lookup converts the IP number to the name.
 ```
-[root@localhost ~]# getent hosts hadoop1
-10.0.2.15       hadoop1
-[root@localhost ~]# getent hosts 10.0.2.15
-10.0.2.15       hadoop1
-[root@localhost ~]# getent hosts hadoop2
-10.0.2.16       hadoop2
-[root@localhost ~]# getent hosts 10.0.2.16
-10.0.2.16       hadoop2
+[root@localhost ~]# getent hosts node1
+10.0.0.4       node1
+[root@localhost ~]# getent hosts 10.0.0.4
+10.0.0.4       node1
+[root@localhost ~]# getent hosts node2
+10.0.0.5        node2
+[root@localhost ~]# getent hosts 10.0.0.5
+10.0.0.5        node2
 ```
 
 ## Show the `nscd` service is running

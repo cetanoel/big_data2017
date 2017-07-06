@@ -1,4 +1,4 @@
-Commands:
+# 0_setup
 
 - List the /etc/passwd entries for neymar and ronaldo
 ```
